@@ -1,0 +1,28 @@
+server:
+  port: 9920
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          #gateway自动根据服务发现为每一个服务创建了一个router
+          enabled: true
+          #将请求路径上的服务名配置为小写
+          lowerCaseServiceId: true
+      routes:
+        - id: service-one
+          uri: lb://SERVICE-ONE
+          # 通过时间、Cookie、Header属性、Host、请求方式、请求路径、请求参数、请求ip地址、匹配，组合使用
+          predicates:
+            - Path=/serviceone/**
+          #serviceone去掉，数字是截取路径的个数，PrefixPath是添加
+          filters:
+            - StripPrefix=1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9910/eureka/

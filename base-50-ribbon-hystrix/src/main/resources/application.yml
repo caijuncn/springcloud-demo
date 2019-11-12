@@ -1,0 +1,11 @@
+server:
+  port: 9950
+
+spring:
+  application:
+    name: ribbon-hystrix
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9910/eureka/
